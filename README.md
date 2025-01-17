@@ -58,6 +58,9 @@ El sistema utiliza una base de datos estructurada que permite gestionar eficient
 ![Diagrama de electrico de LED Receptor](RXLED.png)
 ![Diagrama de electrico de LED Transmisor](TxLED.png)
 
+#### Prototipo Final
+![Prototipo Final](FinalPrototype.jpeg)
+
 ### Uso Futuro
 El prototipo se puede expandir con:
 - Integración de asistentes virtuales como Alexa o Google Assistant.
