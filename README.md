@@ -22,6 +22,7 @@ Este proyecto presenta un **sistema de acceso inteligente** diseñado para mejor
 2. **Requisitos de Software:**
    - **Thonny IDE:** Para cargar y depurar el código en MicroPython.
    - **CallMeBot API:** Para enviar notificaciones vía WhatsApp.
+   - **Biblioteca de LCD para pico:** para controlar la LCD. Encuéntrala [aquí!](https://github.com/T-622/RPI-PICO-I2C-LCD)
 
 3. **Pasos para Configurar el Prototipo:**
    - [ ] Instalar y configurar los módulos de hardware según el Diagrama de Conexión.
@@ -51,6 +52,11 @@ El sistema utiliza una base de datos estructurada que permite gestionar eficient
 
 #### Diagrama de la Base de Datos
 ![Diagrama de Base de Datos](DiseñoBDEEPROM.png)
+
+#### Diagrama electrico
+![Diagrama de electrico principal](MainElectricDesign.png)
+![Diagrama de electrico de LED Receptor](RXLED.png)
+![Diagrama de electrico de LED Transmisor](TxLED.png)
 
 ### Uso Futuro
 El prototipo se puede expandir con:
