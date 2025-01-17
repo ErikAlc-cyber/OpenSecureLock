@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alta de edificio y departamento</title>
+    <link rel="stylesheet" href="/styles">
+</head>
+
+<body>
+
+    <div class="container-alt">
+        <h2>Alta de edificio y departamento</h2>
+        <form id="edifForm">
+        <div class="step">
+            <label for="dep">Nombre o número de torre <span class="optional">(Agrega el número de torre o las primeras tres letras del nombre)</span>:</label>
+            <input type="text" name="torre" required placeholder="12 o Ama">
+        </div>
+        
+        <div class="step">
+            <label for="dep">Número de departamento:</label>
+            <input type="text" name="numdep" required placeholder="1201">
+        </div>
+        
+        <input type="submit" value="Siguiente">
+
+        <div id="success-message" class="success-message" style="display: none;">
+            Departamento registrado con &eacute;xito.
+        </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('edifForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita el envío automático del formulario
+
+            const formData = new FormData(this);
+            const data = new URLSearchParams(formData).toString();
+
+            fetch('/edif', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: data
+            })
+            .then(response => response.text()) // Cambia a `text` para verificar el contenido
+            .then(responseText => {
+                try {
+                    const responseData = JSON.parse(responseText);
+                    if (responseData.status === "success") {
+                        document.getElementById('success-message').style.display = 'block';
+                        setTimeout(function() {
+                            window.location.href = "/admin"; 
+                        }, 2000);
+                    } else {
+                        alert("Hubo un error al realizar el alta.");
+                    }
+                } catch (error) {
+                    console.error("Error al analizar la respuesta JSON:", error);
+                    alert("Error en la respuesta del servidor.");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>

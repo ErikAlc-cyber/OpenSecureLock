@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conectar a WiFi</title>
+    <link rel="stylesheet" href="/styles">
+</head>
+
+<body>
+    <div class="wifi-container">
+        <h1>Selecciona una red WiFi</h1>
+        <form id="wifiConfig">
+            <label for="ssid">Red WiFi:</label>
+            <select name="ssid">
+                <!-- Aquí se inyectarán las opciones dinámicamente -->
+                {{SSID_LIST}}
+            </select>
+            <label for="password">Contrase&ntilde;a:</label>
+            <input type="password" name="password" required>
+            <input type="submit" value="Conectar">
+        </form>
+
+        <div id="success-message" class="success-message" style="display: none;">
+            Se conecto con &eacute;xito.
+        </div>
+
+        <!-- Botón para regresar al inicio -->
+        <button class="back-button" onclick="regresarInicio()">Regresar al inicio</button>
+    </div>
+
+    <script>
+        document.getElementById('wifiConfig').addEventListener('submit', function (event) {
+            event.preventDefault(); // Evita el envío automático del formulario
+
+            const formData = new FormData(this);
+            const data = new URLSearchParams(formData).toString();
+
+            fetch('/connect', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: data
+            })
+                .then(response => response.text())
+                .then(responseText => {
+                    try {
+                        const responseData = JSON.parse(responseText);
+                        if (responseData.status === "success") {
+                            document.getElementById('success-message').style.display = 'block';
+                            setTimeout(function () {
+                                window.location.href = "/";
+                            }, 2000);
+                        } else {
+                            alert("Hubo un error al realizar el alta.");
+                        }
+                    } catch (error) {
+                        console.error("Error al analizar la respuesta JSON:", error);
+                        alert("Error en la respuesta del servidor.");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+        });
+        
+        function regresarInicio() {
+            window.location.href = "/"; // Redirigir al inicio (cambiar URL según sea necesario)
+        }
+    </script>
+</body>
+
+</html>

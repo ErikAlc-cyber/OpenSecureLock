@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alta de Usuario</title>
+    <link rel="stylesheet" href="/styles">
+</head>
+
+<body>
+    <div class="container-alt">
+        <h2>Alta de Usuario</h2>
+        <form id="userForm">
+            <div class="step">
+                <label for="name">Llave de API:</label>
+                <input type="text" name="apikey" placeholder="Ingrese la llave proporcionada por la API">
+            </div>
+
+            <div class="step">
+                <label for="password">Contraseña:</label>
+                <input type="password" name="password" minlength="6" pattern="[0-9]{6,}"
+                    title="La contraseña debe tener al menos 6 dígitos num&eacute;ricos" required
+                    placeholder="Ingrese su contraseña">
+            </div>
+
+            <div class="step">
+                <label>Número de Tarjeta <span class="optional">(Agregar en la cerradura)</span>:</label>
+            </div>
+
+           <div class="step">
+                <input type="button" value="Escanear Tarjeta" id="scanButton">
+                <!-- Campo oculto para almacenar el UID de la tarjeta -->
+                <input type="hidden" name="uid" id="uid">
+                <p id="scanConfirmation" style="display: none; color: green;">Tarjeta escaneada correctamente.</p>
+                <p id="scanError" style="display: none; color: red;">Error en la recuperación del UID de la tarjeta.</p>
+            </div>
+
+            <div class="step">
+                <label for="phone">Número de Tel&eacute;fono:</label>
+                <input type="number" name="phone" placeholder="Ingrese su número de tel&eacute;fono">
+            </div>
+
+            <input type="submit" value="Dar de alta">
+            <button onclick="regresarInicio()">Regresar al inicio</button>
+            <div id="success-message" class="success-message" style="display: none;">
+                Usuario dado de alta con &eacute;xito.
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("scanButton").addEventListener("click", function () {
+            fetch('/nfc-scan', {
+                method: 'POST',
+            })
+                .then(response => response.text())
+                .then(responseText => {
+                    try {
+                        const responseData = JSON.parse(responseText);
+                        if (responseData.uid != "") {
+                            document.getElementById("uid").value = responseData.uid;
+                            document.getElementById("scanConfirmation").style.display = 'block';
+                            document.getElementById("scanError").style.display = 'none';
+                            alert("UID de la tarjeta: " + uid);
+                        } else {
+                            throw new Error("UID vacío");
+                        }
+                    } catch (error) {
+                        document.getElementById("scanError").style.display = 'block';
+                        document.getElementById("scanConfirmation").style.display = 'none';
+                        alert("Error en el escaneo NFC");
+                        console.error("Error:", error);
+                    }
+
+                })
+                .catch(error => console.error("Error:", error));
+        });
+
+        document.getElementById('userForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Evita el envío automático del formulario
+
+            const formData = new FormData(this);
+            const data = new URLSearchParams(formData).toString();
+
+            fetch('/alta', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: data
+            })
+                .then(response => response.text())
+                .then(responseText => {
+                    try {
+                        const responseData = JSON.parse(responseText);
+                        if (responseData.status === "success") {
+                            document.getElementById('success-message').style.display = 'block';
+                            setTimeout(function () {
+                                window.location.href = "/";
+                            }, 2000);
+                        } else {
+                            alert("Hubo un error al realizar el alta.");
+                        }
+                    } catch (error) {
+                        console.error("Error al analizar la respuesta JSON:", error);
+                        alert("Error en la respuesta del servidor.");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+        });
+
+        function regresarInicio() {
+            window.location.href = "/"; // Redirigir al inicio (cambiar URL según sea necesario)
+        }
+    </script>
+
+</body>
+
+</html>

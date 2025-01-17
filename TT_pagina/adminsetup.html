@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alta del administrador</title>
+    <link rel="stylesheet" href="/styles">
+</head>
+
+<body>
+
+    <div class="container-alt">
+        <h2>Alta del administrador</h2>
+        <form id="adminForm">
+        <div class="step">
+            <label for="name">Llave de API:</label>
+            <input type="text" name="apikey" placeholder="Ingrese la llave proporcionada por la API">
+        </div>
+        <div class="step">
+            <label for="phone">Número de Tel&eacute;fono:</label>
+            <input type="number" name="phone" required placeholder="Ingrese su número de tel&eacute;fono">
+        </div>
+        
+        <div class="step">
+            <label for="password">Contraseña:</label>
+            <input type="password" name="password" minlength="6" pattern="[0-9]{6,}" title="La contraseña debe tener al menos 6 dígitos num&eacute;ricos" required placeholder="Ingrese su contraseña">
+        </div>
+        
+        <input type="submit" value="Siguiente">
+
+        <div id="success-message" class="success-message" style="display: none;">
+            Alta realizada con &eacute;xito.
+        </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('adminForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita el envío automático del formulario
+
+            const formData = new FormData(this);
+            const data = new URLSearchParams(formData).toString();
+
+            fetch('/admin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: data
+            })
+            .then(response => response.text()) // Cambia a `text` para verificar el contenido
+            .then(responseText => {
+                try {
+                    const responseData = JSON.parse(responseText);
+                    if (responseData.status === "success") {
+                        document.getElementById('success-message').style.display = 'block';
+                        setTimeout(function() {
+                            window.location.href = "/alta"; 
+                        }, 2000);
+                    } else {
+                        alert("Hubo un error al realizar el alta.");
+                    }
+                } catch (error) {
+                    console.error("Error al analizar la respuesta JSON:", error);
+                    alert("Error en la respuesta del servidor.");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>

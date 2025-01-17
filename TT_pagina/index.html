@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios</title>
+    <link rel="stylesheet" href="/styles">
+</head>
+<body>
+
+<div class="container">
+    <h1>Configuracion de cerradura</h1>
+    <div class="left-section">
+        <table>
+            <tr>
+                <th>Registros</th>
+            </tr>
+            <tr>
+                <!-- Aquí se inyectarán las opciones dinámicamente -->
+                {{LOG_LIST}}
+            </tr>
+        </table>
+
+        <div class="buttons">
+            <button onclick="altaUsuario()">Alta de Usuario</button>
+            <button onclick="bajaUsuario()">Baja de Usuario</button>
+            <button onclick="cambios()">Cambios</button>
+            <button onclick="conectar()">Conectar a internet</button>
+            <button onclick="admin()">Actualizar administrador</button>
+            <button onclick="Salir()">Salir</button>
+        </div>
+    </div>
+
+    <div class="right-section">
+        <div class="info-box">
+            Incidentes
+        </div>
+        <div class="radio-options">
+            <label>
+                <input type="radio" name="info" value="exito" onclick="mostrarBoton()"> Bitacora de accesos exitosos
+            </label>
+            <label>
+                <input type="radio" name="info" value="errores" onclick="mostrarBoton()"> Bitacora de accesos erroneos
+            </label>
+            <label>
+                <input type="radio" name="info" value="bugs" onclick="mostrarBoton()"> Bitacora de problemas t&eacute;cnicos
+            </label>
+        </div>
+        <button id="botonIr" class="hidden" onclick="redirigir()">Ir</button>
+    </div>
+</div>
+
+<script>
+    function mostrarBoton() {
+        document.getElementById("botonIr").classList.remove("hidden");
+    }
+
+    function redirigir() {
+        const opciones = document.getElementsByName('info');
+        let seleccion;
+
+        for (let i = 0; i < opciones.length; i++) {
+            if (opciones[i].checked) {
+                seleccion = opciones[i].value;
+                break;
+            }
+        }
+
+        if (seleccion === "exito") {
+            window.location.href = "/log?type=1";
+        } else if (seleccion === "errores") {
+            window.location.href = "/log?type=2";
+        } else if (seleccion === "bugs") {
+            window.location.href = "/log?type=3";
+        }
+    }
+
+    function altaUsuario() {
+        window.location.href = "/alta";
+    }
+
+    function bajaUsuario() {
+        window.location.href = "/baja";
+    }
+
+    function cambios() {
+        window.location.href = "/cambio";
+    }
+
+    function conectar() {
+        window.location.href = "/config";
+    }
+    function Salir() {
+        window.location.href = "/exit"
+    }
+    function admin() {
+        window.location.href = "/admin";
+    }
+</script>
+
+</body>
+</html>

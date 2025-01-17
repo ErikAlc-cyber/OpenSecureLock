@@ -1,0 +1,211 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ffffff; /* Fondo blanco */
+    color: #6e7076; /* Gris para texto */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 700px;
+    margin: 80px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    
+}
+
+.container:hover{
+    transform: translateY(-5px);
+}
+
+.left-section {
+    width: 90%;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+th, td {
+    padding: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #5333ed; /* Color púrpura para el texto */
+}
+
+th {
+    background-color: #2cd4d9; /* Turquesa para encabezados */
+    color: #ffffff; /* Texto blanco para contraste */
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+button {
+    width: 150px;
+    padding: 12px;
+    margin-right: 15px;
+    background-color: #5333ed; /* Púrpura para botones */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #2cd4d9; /* Turquesa al pasar el ratón */
+    transform: scale(1.05);
+}
+
+.right-section {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+}
+
+.right-section:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.info-box {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.radio-options {
+    margin-bottom: 20px;
+}
+
+.radio-options label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.container-alt,
+.form-container,
+.wifi-container,
+.container-info {
+    max-width: 450px;
+    margin: 80px auto;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.container-alt:hover,
+.form-container:hover,
+.wifi-container:hover,
+.container-info:hover {
+    transform: translateY(-5px);
+}
+
+h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.step {
+    margin-bottom: 20px;
+}
+
+.form-container, .wifi-container, select, button {
+    margin-bottom: 20px;
+}
+
+select, button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #5333ed; /* Púrpura al enfocarse */
+    box-shadow: 0 0 5px rgba(83, 51, 237, 0.3);
+}
+
+button, input[type="submit"],input[type="button"] {
+    width: 100%;
+    padding: 14px;
+    background-color: #5333ed; /* Púrpura para el botón */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-bottom: 20px; 
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background-color: #2cd4d9; /* Turquesa al pasar el ratón */
+    transform: scale(1.05);
+}
+
+.optional {
+    font-style: italic;
+    color: #888;
+}
+
+.success-message {
+    color: #5333ed;
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: center
+}
